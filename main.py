@@ -127,30 +127,124 @@ with PoseLandmarker.create_from_options(options) as landmarker:
 
             height, width, _ = frame.shape
 
+            #==========================================
             # Get left arm landmarks
-            shoulder = [
+            #==========================================
+            left_shoulder = [
                 landmarks[11].x * width,
                 landmarks[11].y * height
             ]
 
-            elbow = [
+            left_elbow = [
                 landmarks[13].x * width,
                 landmarks[13].y * height
             ]
 
-            wrist = [
+            left_wrist = [
                 landmarks[15].x * width,
                 landmarks[15].y * height
             ]
 
             # Calculate elbow angle
-            angle = calculate_angle(shoulder, elbow, wrist)
+            left_angle = calculate_angle(left_shoulder, left_elbow, left_wrist)
 
-            # Display elbow angle
+            #==========================================
+            # Get right arm landmarks
+            #==========================================
+            right_shoulder = [
+                landmarks[12].x * width,
+                landmarks[12].y * height
+            ]
+
+            right_elbow = [
+                landmarks[14].x * width,
+                landmarks[14].y * height
+            ]
+
+            right_wrist = [
+                landmarks[16].x * width,
+                landmarks[16].y * height
+            ]
+
+            right_angle = calculate_angle(right_shoulder, right_elbow, right_wrist)
+
+            #==========================================
+            # Calculate left hip angle
+            #==========================================
+            left_hip_shoulder = [
+                landmarks[11].x * width,
+                landmarks[11].y * height
+            ]
+
+            left_hip = [
+                landmarks[23].x * width,
+                landmarks[23].y * height
+            ]
+
+            left_knee = [
+                landmarks[25].x * width,
+                landmarks[25].y * height
+            ]
+
+            left_hip_angle = calculate_angle(left_hip_shoulder, left_hip, left_knee)
+
+            #==========================================
+            # Calculate right hip angle
+            #==========================================
+            right_hip_shoulder = [
+                landmarks[12].x * width,
+                landmarks[12].y * height
+            ]
+
+            right_hip = [
+                landmarks[24].x * width,
+                landmarks[24].y * height
+            ]
+
+            right_knee = [
+                landmarks[26].x * width,
+                landmarks[26].y * height
+            ]
+
+            right_hip_angle = calculate_angle(right_hip_shoulder, right_hip, right_knee)
+
+            #==========================================
+            # Display angles
+            #=========================================
             cv2.putText(
                 frame,
-                f"Elbow Angle: {int(angle)}",
+                f"Left Elbow: {int(left_angle)} degrees",
                 (20, 80),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (255, 255, 255),
+                2
+            )
+
+            cv2.putText(
+                frame,
+                f"Right Elbow: {int(right_angle)} degrees",
+                (20, 115),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (255, 255, 255),
+                2
+            )
+
+            cv2.putText(
+                frame,
+                f"Left Hip: {int(left_hip_angle)} degrees",
+                (20,150),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (255, 255, 255),
+                2
+            )
+
+            cv2.putText(
+                frame,
+                f"Right Hip: {int(right_hip_angle)} degrees",
+                (20, 185),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.7,
                 (255, 255, 255),
